@@ -15,7 +15,6 @@ export default function Dropdown({ options, value, onChange }: DropdownProps) {
     const [open, setOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
 
-    // Close on outside click
     useEffect(() => {
         const handler = (e: MouseEvent) => {
             if (ref.current && !ref.current.contains(e.target as Node)) {

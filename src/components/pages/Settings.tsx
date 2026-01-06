@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useDashboardPreferences } from '../../context/DashboardPreferencesContext';
@@ -6,21 +6,34 @@ import Toggle from '../atoms/Toggle';
 import Button from '../atoms/Button';
 import { useNavigate } from 'react-router-dom';
 import Heading from '../atoms/Heading';
+import SettingsSkeleton from '../Skeletons/settingsSkeleton';
+import LogoutModal from '../LogoutModal';
 
 const Settings = () => {
     const { user, logout } = useAuth();
     const { theme, toggleTheme } = useTheme();
     const { preferences, updatePreference } = useDashboardPreferences();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 500)
+        return () => clearTimeout(timer)
+    }, [])
 
     const handleLogout = () => {
         logout();
         navigate('/auth');
+        setShowLogoutModal(false);
     };
+
+    if (loading) {
+        return <SettingsSkeleton />
+    }
 
     return (
         <div className="p-6 space-y-6 max-w-4xl">
-            {/* Page Header */}
             <div>
                 <Heading className="text-3xl ">Settings</Heading>
                 <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -28,7 +41,6 @@ const Settings = () => {
                 </p>
             </div>
 
-            {/* Profile Section */}
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center gap-2 mb-4">
                     <span className="text-2xl">👤</span>
@@ -50,7 +62,6 @@ const Settings = () => {
                 </div>
             </div>
 
-            {/* Appearance Section */}
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center gap-2 mb-4">
                     <span className="text-2xl">🎨</span>
@@ -64,7 +75,6 @@ const Settings = () => {
                 />
             </div>
 
-            {/* Dashboard Preferences Section */}
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center gap-2 mb-4">
                     <span className="text-2xl">📊</span>
@@ -98,7 +108,6 @@ const Settings = () => {
                 </div>
             </div>
 
-            {/* Session Section */}
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center gap-2 mb-4">
                     <span className="text-2xl">🔒</span>
@@ -111,13 +120,19 @@ const Settings = () => {
                         </p>
                     </div>
                     <Button
-                        onClick={handleLogout}
+                        onClick={() => setShowLogoutModal(true)}
                         className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors"
                     >
                         Logout
                     </Button>
                 </div>
             </div>
+
+            <LogoutModal
+                isOpen={showLogoutModal}
+                onClose={() => setShowLogoutModal(false)}
+                onConfirm={handleLogout}
+            />
         </div>
     )
 }

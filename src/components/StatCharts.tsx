@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
+import { dashboardService } from '../services/dashboardService';
+import type { RevenueData } from '../types/api.types';
 
-// Sample data for the last 7 days with realistic dates
 const userData = [
     { date: 'Dec 22', users: 100 },
     { date: 'Dec 23', users: 130 },
@@ -13,24 +14,12 @@ const userData = [
     { date: 'Dec 29', users: 400 },
 ]
 
-// Revenue data for the last 6 months
-const revenueData = [
-    { month: 'Jul', revenue: 50000 },
-    { month: 'Aug', revenue: 75000 },
-    { month: 'Sep', revenue: 100000 },
-    { month: 'Oct', revenue: 125000 },
-    { month: 'Nov', revenue: 140000 },
-    { month: 'Dec', revenue: 150000 },
-]
-
-// Traffic sources data
 const trafficData = [
     { name: 'Website', value: 45, color: '#3B82F6' },
     { name: 'Mobile', value: 35, color: '#10B981' },
     { name: 'Other', value: 20, color: '#F59E0B' },
 ]
 
-// Format currency for Y-axis
 const formatCurrency = (value: number) => {
     if (value >= 100000) {
         return `₹${value / 100000}L`
@@ -46,6 +35,23 @@ interface StatChartsProps {
 }
 
 const StatCharts = ({ showUserChart = true, showRevenueChart = true }: StatChartsProps) => {
+    const [revenueData, setRevenueData] = useState<RevenueData[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchRevenueData = async () => {
+            try {
+                const data = await dashboardService.getRevenueData();
+                setRevenueData(data);
+            } catch (error) {
+                console.error('Failed to fetch revenue data:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchRevenueData();
+    }, []);
     return (
         <div className="space-y-6">
 
@@ -93,7 +99,6 @@ const StatCharts = ({ showUserChart = true, showRevenueChart = true }: StatChart
                 </div>
             )}
 
-            {/* Revenue Bar Chart */}
             {showRevenueChart && (
                 <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
@@ -138,7 +143,6 @@ const StatCharts = ({ showUserChart = true, showRevenueChart = true }: StatChart
                 </div>
             )}
 
-            {/* Traffic Sources Pie Chart - Always visible */}
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                     Traffic Sources

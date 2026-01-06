@@ -1,0 +1,134 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "email": "admin@example.com",
+            "password": "admin123",
+            "name": "Admin User",
+            "role": "Admin"
+        },
+        {
+            "id": 2,
+            "email": "user@example.com",
+            "password": "user123",
+            "name": "Regular User",
+            "role": "User"
+        }
+    ],
+    "dashboardStats": {
+        "totalRevenue": 45231.89,
+        "totalUsers": 2350,
+        "activeUsers": 1823,
+        "conversionRate": 3.24
+    },
+    "revenueData": [
+        {
+            "month": "Jan",
+            "revenue": 4000,
+            "users": 2400
+        },
+        {
+            "month": "Feb",
+            "revenue": 3000,
+            "users": 1398
+        },
+        {
+            "month": "Mar",
+            "revenue": 2000,
+            "users": 9800
+        },
+        {
+            "month": "Apr",
+            "revenue": 2780,
+            "users": 3908
+        },
+        {
+            "month": "May",
+            "revenue": 1890,
+            "users": 4800
+        },
+        {
+            "month": "Jun",
+            "revenue": 2390,
+            "users": 3800
+        }
+    ],
+    "reports": [
+        {
+            "id": 1,
+            "type": "user",
+            "userName": "John Doe",
+            "email": "john@example.com",
+            "signupDate": "2026-01-05",
+            "status": "active",
+            "totalSpent": 1250.50
+        },
+        {
+            "id": 2,
+            "type": "user",
+            "userName": "Jane Smith",
+            "email": "jane@example.com",
+            "signupDate": "2026-01-04",
+            "status": "inactive",
+            "totalSpent": 890.00
+        },
+        {
+            "id": 3,
+            "type": "user",
+            "userName": "Bob Johnson",
+            "email": "bob.j@example.com",
+            "signupDate": "2026-01-02",
+            "status": "active",
+            "totalSpent": 2100.00
+        },
+        {
+            "id": 4,
+            "type": "user",
+            "userName": "Alice Williams",
+            "email": "alice.w@example.com",
+            "signupDate": "2025-12-28",
+            "status": "active",
+            "totalSpent": 1500.00
+        },
+        {
+            "id": 5,
+            "type": "revenue",
+            "date": "2026-01-06",
+            "amount": 5000,
+            "source": "Subscriptions",
+            "status": "completed"
+        },
+        {
+            "id": 6,
+            "type": "revenue",
+            "date": "2026-01-05",
+            "amount": 3500,
+            "source": "One-time Purchase",
+            "status": "completed"
+        },
+        {
+            "id": 7,
+            "type": "revenue",
+            "date": "2026-01-03",
+            "amount": 2200,
+            "source": "Subscriptions",
+            "status": "completed"
+        },
+        {
+            "id": 8,
+            "type": "revenue",
+            "date": "2025-12-30",
+            "amount": 1800,
+            "source": "One-time Purchase",
+            "status": "pending"
+        }
+    ],
+    "userSettings": {
+        "id": 1,
+        "userId": 1,
+        "theme": "dark",
+        "showRevenue": true,
+        "showUserGrowth": true,
+        "emailNotifications": true
+    }
+}
